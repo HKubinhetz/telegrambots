@@ -1,0 +1,1 @@
+{'1': '@120938790 (Henrique)', '2': '@pereiraarthur (Tuts)', '3': '@gustavoliveira (Gus)', '4': '@keyfp (Key)', '5': '@144361020 (Eriert)', '6': '@RealMr_Glasses (Nickolas)', '7': '@144164272 (Chuco)', '8': '@antoniobaiense (Tony)', '9': '@jardelvictor (Jardel)', '10': '@joaoemmanuel (Jão)', '11': '@wengbruch (Werner)'}
