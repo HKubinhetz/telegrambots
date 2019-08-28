@@ -6,6 +6,9 @@
 
 # -----------------------------------------PATCH-NOTES---------------------------------------------
 
+# ---- Versão 1.4 ----
+# Função randomigo para escolher pessoas aleatoriamente, seja nas mensagens, seja na função pintudo.
+
 # ---- Versão 1.3 ----
 # Agora temos timing e migos em um arquivo! Nice!
 
@@ -21,11 +24,10 @@
 
 # --------------------------------------------TO-DO------------------------------------------------
 
-# Fazer o bot xingar os outros aleatoriamente (fazer uma função randomigo)
 # Fazer funcionar a função de shutdown
+# Entender as estruturas de logging de erros
 # Funções de ranking
 # Joguinhos e tokens para aumentar as chances de ganhar
-# Entender as estruturas de logging de erros
 
 # -------------------------------------------------------------------------------------------------
 # ---------------------------------------------CODE------------------------------------------------
@@ -63,17 +65,23 @@ kubinha_chatID = '120938790'  # ID do Kubinha
 
 
 # Função pintudo, que define o pintudo do dia.
-def pintudo(bot=None, update=None):
-    pintudos = playerlist_read()
+def pintudo(bot, update):
 
-    # Mostrando que a função foi chamada, cálculo aleatório e qual o resultado:
-    print("Pintudo Request!")
-    pintudo_id = str(random.randint(1, 11))
-
+    pintudo_player = randomigo()
     # Print do resultado e envio da mensagem:
-    print("Parabéns, " + pintudos[pintudo_id] + "! " + "Você é o pintudo do dia!")
+    print("Parabéns, " + pintudo_player + "! " + "Você é o pintudo do dia!")
     chat_id = update.message.chat_id
-    bot.send_message(chat_id=chat_id, text="Parabéns, " + pintudos[pintudo_id] + "! " + "Você é o pintudo do dia!")
+    bot.send_message(chat_id=chat_id, text="Parabéns, " + pintudo_player + "! " + "Você é o pintudo do dia!")
+
+
+# Função Randomigo, para eleger alguém aleatoriamente (usado em mensagens e na função pintudo)
+def randomigo():
+    playerlist = playerlist_read()      # Pega os nomes dos migos
+
+    print("Randomigo Request!")             # Escolha de um número aleatório para pegar uma pessoa da lista.
+    player_id = str(random.randint(1, 11))
+    player = str(playerlist[player_id])
+    return player
 
 
 # Função wait, que envia uma mensagem para esperar caso o tempo limite ainda não tenha sido atingido.
@@ -109,14 +117,17 @@ def timelimit(bot, update):
 # Função timelimit, que mostra qual o tempo limite existente.
 def helpme(bot, update):
     chat_id = update.message.chat_id
+    helpme_player = randomigo()             # Vamos escolher alguém pra zoar!
     bot.send_message(chat_id=chat_id, text="Lá vem você me amolar pedindo ajuda né? Oh well, como eu sou uma máquina "
-                                           "desprovida de emoções, não faz diferença quantas vezes você chama esse"
-                                           "comando. Vai da consciência de cada um (viu, @keyfp???) Pois bem:")
+                                           "desprovida de emoções, não faz diferença quantas vezes você chama esse "
+                                           "comando. Vai da consciência de cada um"
+                                           " (viu, " + helpme_player + ")? Pois bem:")
+    helpme_player = randomigo()             # Mais um migo pra tirar onda.
     bot.send_message(chat_id=chat_id, text="/pintudo - Razão da minha existência. Vamos eleger um pintudo! \n"
                                            "/teste - Será que estou vivo? Descubra com esse comando. \n"
                                            "/getid - Quer descobrir seu chat ID por qualquer motivo? Fique à vontade,"
                                            "mas não me envolva em nada além disso! Já basta meu mestre ser amigo do "
-                                           "@144361020 (Eriert).\n"
+                                           + helpme_player + ".\n"
                                            "/timelimit - Use esse para saber qual o tempo limite entre sorteios!\n"
                                            "/help - Tu tá de sacanagem se não sabe pra que serve esse.")
 
@@ -137,9 +148,10 @@ def timemanager(bot, update, args):
         global timelimit_value
         print("Erro na hora de mudar o tempo!")
         # Mensagem de insucesso na alteração.
+        time_player = randomigo()  # Vamos escolher alguém pra zoar!
         timelimit_value, timelimit_message = get_timelimit()
         bot.send_message(chat_id=chat_id, text="Difícil você fazer alguma coisa certo, né? (eu estou olhando pra você, "
-                                               "@144164272 (Chuco)? O limite se mantém em: " + str(timelimit_value) +
+                                               + time_player + "? O limite se mantém em: " + str(timelimit_value) +
                                                " segundos.")
         bot.send_message(chat_id=chat_id, text="Falando sério agora, certifique-se que você usou o comando"
                                                " corretamente: /timemanager <número de segundos> (sem as chaves, né?).")

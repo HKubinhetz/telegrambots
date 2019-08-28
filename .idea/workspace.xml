@@ -2,22 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="825fa759-9ce1-4b73-8697-3d7775a97305" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PintudoBot/filemanager/playerlist.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PintudoBot/filemanager/playerlist.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PintudoBot/filemanager/playerlists/migos.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PintudoBot/filemanager/playerlists/playerlist.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PintudoBot/playerlist.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PintudoBot/prototyping/modules.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PintudoBot/timelimit.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PintudoBot/timemanager.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PintudoBot/timing/timeconverter.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/TelegramBots.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/TelegramBots.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PintudoBot/gettime.py" beforeDir="false" afterPath="$PROJECT_DIR$/PintudoBot/timing/gettime.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PintudoBot/filemanager/playerlist.py" beforeDir="false" afterPath="$PROJECT_DIR$/PintudoBot/filemanager/playerlist.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PintudoBot/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/PintudoBot/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PintudoBot/timemanager.txt" beforeDir="false" afterPath="$PROJECT_DIR$/PintudoBot/timemanager.txt" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -193,6 +181,14 @@
       <option name="presentableId" value="Default" />
       <updated>1557356023630</updated>
     </task>
+    <task id="LOCAL-00001" summary="Telegram Bot v1.3 - Com Timing e tudo que tem direito!">
+      <created>1566849061954</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1566849061954</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -210,5 +206,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="Telegram Bot v1.3 - Com Timing e tudo que tem direito!" />
+    <option name="LAST_COMMIT_MESSAGE" value="Telegram Bot v1.3 - Com Timing e tudo que tem direito!" />
   </component>
 </project>

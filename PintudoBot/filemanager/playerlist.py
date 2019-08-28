@@ -36,8 +36,6 @@ def playerlist_read():
     # >>> Leitura:
     playerlist_file = open("playerlist.txt", "r+")
     playerlist_content = eval(playerlist_file.read())
-    print(playerlist_content)
-    print(type(playerlist_content))
 
     return playerlist_content
 
