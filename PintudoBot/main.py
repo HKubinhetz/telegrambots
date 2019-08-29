@@ -6,6 +6,9 @@
 
 # -----------------------------------------PATCH-NOTES---------------------------------------------
 
+# ---- Versão 1.5 ----
+# Demorou, mas foi: Temos safe shutdown no bot!
+
 # ---- Versão 1.4 ----
 # Função randomigo para escolher pessoas aleatoriamente, seja nas mensagens, seja na função pintudo.
 
@@ -24,10 +27,9 @@
 
 # --------------------------------------------TO-DO------------------------------------------------
 
-# Fazer funcionar a função de shutdown
 # Entender as estruturas de logging de erros
-# Funções de ranking
-# Joguinhos e tokens para aumentar as chances de ganhar
+# Criar funções de ranking!
+# Criar (ou inteligar) joguinhos e "tokens" para aumentar as chances de ganhar
 
 # -------------------------------------------------------------------------------------------------
 # ---------------------------------------------CODE------------------------------------------------
@@ -37,13 +39,18 @@
 
 # ------------------------------------------IMPORTAÇÕES--------------------------------------------
 
+print("---------- Pintudo Bot v1.5 -----------")
+print("----- Feito com amor pelo Kubinha -----")
+print("Inicializando...")
+
 from telegram.ext import Updater, CommandHandler    # >>> Coisas de bot!
 import random                                       # >>> Cálculos!
 import logging                                      # >>> Logging de erros!
 import requests                                     # >>> Para enviar mensagens grátis!
+import threading                                    # >>> Para desligar o bot em uma thread nova! (sei lá pq)
 from PintudoBot.timing.gettime import *             # >>> Para gerenciar o tempo!
 from PintudoBot.filemanager.playerlist import *     # >>> Para gerenciar os usuários!
-
+print("Importações OK")
 # --------------------------------------------LOGGING----------------------------------------------
 
 # Sei lá o que isso faz...
@@ -57,10 +64,12 @@ logger = logging.getLogger(__name__)
 
 timelimit_value = 0             # Definição da variável de limite de tempo!
 
+
 # Tokens!
 bot_token = '809699775:AAE5M1XZSAFCLa3DSQ7TMnORZ2HBI0EOxno'  # PintudoBot
 kubinha_chatID = '120938790'  # ID do Kubinha
-
+updater = Updater(bot_token) # atribuição do bot às atualizações
+print("Declarações e conexão OK")
 # -------------------------------------FUNÇÕES SECUNDÁRIAS-----------------------------------------
 
 
@@ -107,8 +116,15 @@ def shotcaller(bot,update):
 def timelimit(bot, update):
 
     global timelimit_value
+    timelimit_player = randomigo()      # Vamos escolher alguém para zoar!
 
-    timelimit_value, timelimit_message = get_timelimit()
+    timelimit_value = get_timelimit()
+    timelimit_message = "O tempo limite atual é de " + timelimit_value + " segundos. Nada tema! Você, usuário fresco " \
+                        "e mau perdedor, pode agora mudar esse valor através do comando /changetime <segundos>. " \
+                        "Se meu mestre (aquele gostoso) estiver com paciência, saberei até contar em minutos," \
+                        " horas e até mesmo dias no futuro ! É mais do que se pode esperar, por exemplo, " \
+                        "do " + timelimit_player + "."
+
     chat_id = update.message.chat_id
     bot.send_message(chat_id=chat_id, text=timelimit_message)
     bot.send_message(chat_id=chat_id, text="Para saber os comandos desse bot super completo (euzinho), digite /help")
@@ -125,7 +141,7 @@ def helpme(bot, update):
     helpme_player = randomigo()             # Mais um migo pra tirar onda.
     bot.send_message(chat_id=chat_id, text="/pintudo - Razão da minha existência. Vamos eleger um pintudo! \n"
                                            "/teste - Será que estou vivo? Descubra com esse comando. \n"
-                                           "/getid - Quer descobrir seu chat ID por qualquer motivo? Fique à vontade,"
+                                           "/getid - Quer descobrir seu chat ID por qualquer motivo? Fique à vontade, "
                                            "mas não me envolva em nada além disso! Já basta meu mestre ser amigo do "
                                            + helpme_player + ".\n"
                                            "/timelimit - Use esse para saber qual o tempo limite entre sorteios!\n"
@@ -172,13 +188,19 @@ def get_chat_id(bot,update):
     bot.send_message(chat_id=chat_id, text="Olá! Seu chat id é: " + id_string)
 
 
-"""
-def shutdown(bot,update):
-    # Função de desligamento!
+# Função que efetivamente para o bot, através de uma outra thread.
+def stop(bot, update):
     chat_id = update.message.chat_id
     bot.send_message(chat_id=chat_id, text="Vou nanar agora, boa noite!")
-    Updater(bot_token).stop()
-"""
+    threading.Thread(target=shutdown).start()
+    print("Aviso: O bot está desligando...")
+
+
+def shutdown():
+    # Função de desligamento! É chamada pela stop para botar a mão na massa.
+    global updater
+    updater.stop()
+    updater.is_idle = False
 
 
 def messenger(bot_message):
@@ -190,6 +212,9 @@ def messenger(bot_message):
     response = requests.get(send_text)
     return response.json()
 
+
+print("Funcionalidades Gerais OK")
+
 # -------------------------------------------------------------------------------------------------
 # ---------------------------------------------MAIN------------------------------------------------
 # -------------------------------------------------------------------------------------------------
@@ -197,19 +222,22 @@ def messenger(bot_message):
 
 # Função principal, que conecta ao Telegram e realiza as transações.
 def main():
-    updater = Updater(bot_token)
+    print("Inicialização dos comandos...")
+    global updater
     dp = updater.dispatcher
     dp.add_handler(CommandHandler('pintudo', shotcaller))       # >>> Habilitação da função pintudo no bot.
     dp.add_handler(CommandHandler('teste', teste))              # >>> Habilitação da função de teste no bot.
     dp.add_handler(CommandHandler('help', helpme))              # >>> Habilitação da função de ajuda no bot.
     dp.add_handler(CommandHandler('timelimit', timelimit))      # >>> Habilitação da função de tempo limite no bot.
     dp.add_handler(CommandHandler('getid', get_chat_id))        # >>> Habilitação da função de ID no bot.
+    dp.add_handler(CommandHandler('stop', stop))        # >>> Habilitação da função de shutdown no bot.
 
     dp.add_handler(CommandHandler('changetime', timemanager, pass_args=True))       # >>> Habilitação da função de
-                                                                                    # gestão de tempo no bot.
-
+    print("Comandos OK")                                                            # gestão de tempo no bot.
     updater.start_polling()
+    print("Aviso: A varredura contínua por comandos foi iniciada; o bot está funcional.")
     updater.idle()
+    print("Aviso: A execução do bot foi encerrada.")
 
 
 if __name__ == '__main__':

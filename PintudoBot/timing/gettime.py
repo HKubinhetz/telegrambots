@@ -23,14 +23,10 @@ def get_timelimit():
 
     timelimit_pointer = open("timelimit.txt", 'r+')     # Abre o arquivo e lê o tempo limite existente.
     timelimit = timelimit_pointer.read()
-    timelimit_message = "O tempo limite atual é de " + timelimit + " segundos. Nada tema! Você, usuário fresco e" \
-                        " mau perdedor, pode agora mudar esse valor através do comando /changetime <segundos>. " \
-                        "Se meu mestre (aquele gostoso) estiver com paciência, saberei até contar em minutos," \
-                        " horas e até mesmo dias no futuro ! É mais do que se pode esperar, por exemplo, " \
-                        "do @joaoemmanuel!"
+
     timelimit_pointer.close()                           # Fecha a referência pois sou programador exemplo.
 
-    return timelimit, timelimit_message                 # Retorna o tempo e a mensagem!
+    return timelimit                                    # Retorna o tempo e a mensagem!
 
 
 def changelimit(new_limit):
