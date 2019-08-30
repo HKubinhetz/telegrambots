@@ -6,6 +6,9 @@
 
 # -----------------------------------------PATCH-NOTES---------------------------------------------
 
+# ---- Versão 1.6 ----
+# Removido o Token do Bot do versionamento.
+
 # ---- Versão 1.5 ----
 # Demorou, mas foi: Temos safe shutdown no bot!
 
@@ -27,7 +30,6 @@
 
 # --------------------------------------------TO-DO------------------------------------------------
 
-# Entender as estruturas de logging de erros
 # Criar funções de ranking!
 # Criar (ou inteligar) joguinhos e "tokens" para aumentar as chances de ganhar
 
@@ -45,18 +47,11 @@ print("Inicializando...")
 
 from telegram.ext import Updater, CommandHandler    # >>> Coisas de bot!
 import random                                       # >>> Cálculos!
-import logging                                      # >>> Logging de erros!
 import requests                                     # >>> Para enviar mensagens grátis!
 import threading                                    # >>> Para desligar o bot em uma thread nova! (sei lá pq)
 from PintudoBot.timing.gettime import *             # >>> Para gerenciar o tempo!
 from PintudoBot.filemanager.playerlist import *     # >>> Para gerenciar os usuários!
 print("Importações OK")
-# --------------------------------------------LOGGING----------------------------------------------
-
-# Sei lá o que isso faz...
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                    level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 # ------------------------------------------DECLARAÇÕES--------------------------------------------
 
@@ -66,7 +61,10 @@ timelimit_value = 0             # Definição da variável de limite de tempo!
 
 
 # Tokens!
-bot_token = '809699775:AAE5M1XZSAFCLa3DSQ7TMnORZ2HBI0EOxno'  # PintudoBot
+file_token = open('token.tkn', 'r+')  # PintudoBot Token
+bot_token = file_token.read()
+file_token.close()
+
 kubinha_chatID = '120938790'  # ID do Kubinha
 updater = Updater(bot_token) # atribuição do bot às atualizações
 print("Declarações e conexão OK")
@@ -77,6 +75,7 @@ print("Declarações e conexão OK")
 def pintudo(bot, update):
 
     pintudo_player = randomigo()
+    print(pintudo_player)
     # Print do resultado e envio da mensagem:
     print("Parabéns, " + pintudo_player + "! " + "Você é o pintudo do dia!")
     chat_id = update.message.chat_id
